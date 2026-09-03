@@ -68,5 +68,32 @@ def select_material #material selection
         else:
             print("Error: Invalid selection. Please Choose from numbers 1, 2, 3, and 4.")
 
+def run_calculator():
+    print(" = " * 20)
+    print("Stress, Stress, and Safety Analysis Calculator")
+    print(" = " * 20)
 
-      
+#material selection stuff
+mat_name, yield_strength_mpa, youngs_module_gpa = select_material()
+
+#input validation time
+print("\nPlease enter the requested values below.\n")
+applied_force = get_positive_float("Enter applied force (F) in Newton (N): ")
+cross_sectional_area = get_positive_float("Enter cross sectional area (A) in square meter [m^2]: ")
+original_length = get_positive_float("Enter original length in meters [m]: ")
+change_in_length = get_positive_float("Enter change in length in meters [m]: ", allow_zero=True)
+
+#calculations
+stress_pa = applied_force / cross_sectional_area
+stress_mpa = stress_pa / 1e6
+strain = change_in_length / original_length
+
+#analysis and factor of safety
+fos = yield_strength_mpa / stress_mpa
+
+if fos >= 1.2:
+    status = "SAFE"
+elif 1.0 <= fos < 1.2:
+    status = "CAUTION - Loading near material yield point"
+else:
+    status = "UNSAFE - Material failure / yielding likely!"
