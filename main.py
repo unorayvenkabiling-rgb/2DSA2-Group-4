@@ -26,3 +26,21 @@ print(" Calculated Outputs: ")
 print(f" - Engineering Stress: {stress:,.2f}Pa")
 print(f" - Engineering Strain: {strain:.6f}")
 print( " = " * 50)       
+
+#task 2
+def get_positive_float(prompt, allow_zero=False): #input validation
+  while True:
+    try:
+      val = float(input(prompt))
+      if allow_zero and val < 0:
+        print("Error: The input cannot be negative.")
+        continue
+      elif not allow_zero and val <= 0:
+        print("Error: The input must be strictly greater than zero.")
+        continue
+      return val
+    except ValueError:
+      print("Error: Invalid input. Please enter a numerical value.")
+
+def select_material #material selection
+
