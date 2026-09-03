@@ -163,7 +163,7 @@ if __name__ == "__main__":
 
 #end of isaiah's part
 
-# start of miah's part (task 3)
+# start of jeremiah's part (task 3)
 def run_calculator_task3(history_list, unique_materials, units):
     #Executes the calculator and stores the data in the history list and unique materials set
     print("\n" + " = " * 25)
@@ -237,7 +237,7 @@ def run_calculator_task3(history_list, unique_materials, units):
     print(" = " * 50)
 
 def session_summary(history_list, unique_materials):
-    #Displays the session summary with  basic statistical information    
+    #Displays the session summary with  basic statistical information
     print("\n" + "=" * 50)
     print(" SESSION SUMMARY REPORT ")
     print("=" * 50)
@@ -264,10 +264,10 @@ def session_summary(history_list, unique_materials):
 
 def main_task3():
     """Main loop for repeated calculations."""
-    #TUPLE: Values that should remain constant 
+    #TUPLE: Values that should remain constant
     #constant_values = ("N", "m^2", "m", "MPa", "GPa")
 
-    #LIST: Stores the history of calculations performed in the session  
+    #LIST: Stores the history of calculations performed in the session
     #session_history = []
 
     #SET: Stores unique materials tested during the session
@@ -293,4 +293,4 @@ def main_task3():
 if __name__ == "__main__":
     main_task3()
 
-#end of miah's part(task 3)
+#end of jeremiah's part(task 3)
