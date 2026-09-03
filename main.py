@@ -115,7 +115,27 @@ print(f" - Original Length: {original_length:.4f} m")
 print(f" - Change in Length: {change_in_length:.6f} m")
 
 print("Calculated Outputs:")
-print(f" - Engineering Stress:    {stress_mpa:,.2f} MPa")
-print(f" - Yield Strength: {yield_strength_mpa:,.2f} MPa")
-print(f" - Young's Modulus: {youngs_modulus_gpa:,.2f} GPa")
+print(f" - Engineering Stress:    {stress_mpa:,.2f} MPa ({stress_pa:,.2f} Pa)")
+print(f" - Engineering Strain:    {strain:.6f:}")
+print(" - " * 25)
 
+print("Safety Analysis:")
+print(f" - Factor of Safety:      {fos:.2f}")
+print(f" - Safety Status:         {status}")
+print(" = " * 50)
+
+def main():
+    while True:
+      try:
+          run_calculator()
+      except KeyboardInterrupt:
+          print("\n\nProgram force-closed by user. Existing grafully...")
+          break
+
+      repeat = input("\nWould you like to perform another calculation? (y/n): ").strip().lower()
+      if repeat != 'y':
+          print("Thank you for using the calculator. Program terminated.")
+          break
+
+if__name__ == "__main__":
+  main()
