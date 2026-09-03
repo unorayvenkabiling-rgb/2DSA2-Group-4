@@ -97,3 +97,25 @@ elif 1.0 <= fos < 1.2:
     status = "CAUTION - Loading near material yield point"
 else:
     status = "UNSAFE - Material failure / yielding likely!"
+
+#output display
+print("\n" + "=" * 50)
+print("Calculation results")
+print("=" * 50)
+
+print("Material Info:")
+print(f" - Material Selected: {mat_name}")
+print(f" - Yield Strength: {yield_strength_mpa:,.2f} MPa")
+print(f" - Young's Modulus: {youngs_modulus_gpa:,.2f} GPa")
+
+print("Input Parameters:")
+print(f" - Applied Force: {applied_force:,.2f} N")
+print(f" - Cross Sectional Area: {cross_sectional_area:.6f} m^2")
+print(f" - Original Length: {original_length:.4f} m")
+print(f" - Change in Length: {change_in_length:.6f} m")
+
+print("Calculated Outputs:")
+print(f" - Engineering Stress:    {stress_mpa:,.2f} MPa")
+print(f" - Yield Strength: {yield_strength_mpa:,.2f} MPa")
+print(f" - Young's Modulus: {youngs_modulus_gpa:,.2f} GPa")
+
