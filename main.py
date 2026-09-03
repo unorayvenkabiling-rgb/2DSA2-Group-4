@@ -43,4 +43,30 @@ def get_positive_float(prompt, allow_zero=False): #input validation
       print("Error: Invalid input. Please enter a numerical value.")
 
 def select_material #material selection
+  materials = {
+    "1": (Steel, 250.0, 200.0),
+    "2": ("Aluminum", 95.0, 69.0),
+    "3": ("Titanium, 880.0, 114.0),
+  }
 
+  print("\n---Material Selection---)
+  print("1. Steel (Yield Strength: 250 MPa, Young's Modulus: 200 GPa)")
+  print("2. Aluminum (Yield Strength: 95 MPa, Young's Modulus: 69 GPa)")
+  print("3. Titanium (Yield Strength: 880 MPa, Young's Modulus: 114 GPa)")
+  print("4. Custom Material")
+
+  while True:
+        choice = input("Select an option (1-4): ").strip()
+        if choice in materials:
+          name, yield_strength, youngs_modulus = materials[choice]
+          return name, yield_strength, youngs_modulus
+        elif choice == "4":
+            name = input("Enter custom material name: ").strip() or "Custom Material"
+            yield_strength = get_positive_float("Enter Yield Strength in MPa: ")
+            youngs_modulus = get_positive_float("Enter Young's Modulus in GPa: ")
+            return name, yield_strength, youngs_modulus
+        else:
+            print("Error: Invalid selection. Please Choose from numbers 1, 2, 3, and 4.")
+
+
+      
