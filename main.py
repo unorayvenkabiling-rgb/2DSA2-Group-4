@@ -3,29 +3,22 @@
 Final Integrated Project (Task 6: System Integration)
 
 Authors & Task Contributions:
-- Task 1: Basic Calculations & Physics Engine (Uno)
-- Task 2: Control Structures, Validation & Safety Logic (Isaiah)
-- Task 3: Data Structures (Tuples, Lists, Sets, Dictionaries) & History (Jeremiah)
+- Task 1: Basic Calculations & Physics Engine (Kabiling)
+- Task 2: Control Structures, Validation & Safety Logic (Collado)
+- Task 3: Data Structures (Tuples, Lists, Sets, Dictionaries) & History (Padilla)
 - Task 4: Modular Functions & Standardized Formatting (Roman)
-- Task 5: Object-Oriented Design (Classes, Inheritance, Dataclass) (John)
+- Task 5: Object-Oriented Design (Classes, Inheritance, Dataclass) (Ballesteros)
 - Task 6: Complete Architectural Integration (Group 4)
 """
 
 from dataclasses import dataclass
 from typing import List, Dict, Set, Optional, Tuple
 
-
-# ==============================================================================
-# SECTION 1: CONSTANTS & DATA STRUCTURES (TASK 3)
-# ==============================================================================
-# TUPLE: Immutable engineering units used throughout the application
-# Index 0: Force [N], 1: Area [m^2], 2: Length [m], 3: Stress [MPa], 4: Modulus [GPa]
+# constants and data structures
+# Tuple (immutable)
 UNITS: Tuple[str, ...] = ("N", "m^2", "m", "MPa", "GPa")
 
-
-# ==============================================================================
-# SECTION 2: INPUT VALIDATION & CONTROL STRUCTURES (TASK 2 & TASK 4)
-# ==============================================================================
+# input validation and control structures
 def get_positive_float(prompt: str, allow_zero: bool = False) -> float:
     """
     Validates numeric user inputs with robust exception handling.
@@ -55,10 +48,7 @@ def get_yes_no(prompt: str) -> bool:
             return False
         print(" Error: Please respond with 'y' or 'n'.")
 
-
-# ==============================================================================
-# SECTION 3: CORE FORMULAS & MODULAR FUNCTIONS (TASK 1 & TASK 4)
-# ==============================================================================
+# core formulas and modular functions
 def calculate_stress_pa(force: float, area: float) -> float:
     """Engineering Stress: sigma = Force / Area (in Pascals [Pa])."""
     return force / area
@@ -98,9 +88,7 @@ def determine_safety_status(fos: float) -> str:
         return "UNSAFE - Material failure / yielding likely!"
 
 
-# ==============================================================================
-# SECTION 4: OBJECT-ORIENTED DATA MODEL (TASK 5)
-# ==============================================================================
+# object-oriented data models
 @dataclass
 class StressStrainTest:
     """Encapsulates the physical measurements of a tension/compression test."""
@@ -130,7 +118,7 @@ class Material:
 
     def evaluate_test(self, test: StressStrainTest) -> Dict[str, any]:
         """
-        DICTIONARY (Task 3):
+        DICTIONARY:
         Evaluates the material under the given test parameters and returns a complete record.
         """
         stress_pa = calculate_stress_pa(test.force, test.area)
@@ -178,10 +166,7 @@ class Composite(Material):
     def __init__(self, name: str = "Carbon Fiber Composite", yield_strength: float = 500.0, elastic_modulus: float = 120.0):
         super().__init__(name, yield_strength, elastic_modulus)
 
-
-# ==============================================================================
-# SECTION 5: FORMATTING & PRESENTATION (TASK 1, 2, 4)
-# ==============================================================================
+# formatting and presentation
 BANNER_WIDTH = 61
 
 
@@ -221,9 +206,7 @@ def display_test_record(record: Dict[str, any], units: Tuple[str, ...] = UNITS) 
     print("=" * BANNER_WIDTH)
 
 
-# ==============================================================================
-# SECTION 6: SYSTEM COMPOSITION & SESSION MANAGER (TASK 3 & TASK 5)
-# ==============================================================================
+# system composition and session management
 class StressAnalysisSystem:
     """
     Composition Manager that coordinates materials, tests,
@@ -231,9 +214,9 @@ class StressAnalysisSystem:
     """
 
     def __init__(self):
-        # LIST (Task 3): Stores all individual test records
+        # List(stores all individual test records)
         self.history_list: List[Dict[str, any]] = []
-        # SET (Task 3): Tracks unique material names tested
+        # Set(tracks unique material names tested_
         self.unique_materials: Set[str] = set()
         # Catalog of pre-configured materials
         self.materials_catalog: List[Material] = [
@@ -348,9 +331,7 @@ class StressAnalysisSystem:
         print("=" * BANNER_WIDTH)
 
 
-# ==============================================================================
-# SECTION 7: MAIN APPLICATION ENTRY POINT (TASK 6)
-# ==============================================================================
+# main application entry point
 def main() -> None:
     """Main interactive execution loop."""
     system = StressAnalysisSystem()
