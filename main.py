@@ -9,7 +9,7 @@ cross_sectional_area = float(input(" Enter cross sectional area (A) in square me
 original_length = float(input(" Enter original length in meters [m]:"))
 change_in_length = float(input(" Enter change in length in meters [m]:"))
 
-stress = applied_force / original_length
+stress = applied_force / cross_sectional_area
 strain = change_in_length / original_length
 
 print("\n" + "=" * 50)
