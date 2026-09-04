@@ -33,7 +33,7 @@ pip install -r requirements.txt
 
 2DSA2-Group-4/
 
-├── stress_calculator/
+* stress_calculator/
 
 *  __init__.py           # Package marker and metadata
 
