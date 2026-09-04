@@ -1,6 +1,6 @@
-**#Stress and Strain Analysis System**
+**Stress and Strain Analysis System**
 
-**#Group Members**
+**Group Members**
 Uno Timothy Rayven Kabiling – Task 1: Basic Calculations
 Isaiah Collado – Task 2: Control Structures
 Jeremiah Daniel Padilla– Task 3: Data Structures
@@ -9,18 +9,18 @@ John Christian Ballesteros – Task 5: OOP
 
 Task 6 Modular Integration was completely collaboratively by all members
 
-**#Project Description**
+**Project Description**
 [Write a short 1-2 sentence summary explaining what the program does.]
 The program
 
-**## Program Features**
+**Program Features**
 * Single Material Analysis: Calculate Engineering Stress(Pa/Mpa), Engineering Strain, Young's Modulus, and Factor of Safety
 * Multi Material Comparison: Metals, Plastics and composites with side by side comparison
 * Stimulated Test Data: Physical tests (Force, Area, Length and Deformation)
 * Data Persistence: Logs timestamps
 * Session History: Tracks test run
 
-**## Installation/Requirements**
+**Installation / Requirements**
 * Python 3.12.6
 * Visual Studio Code
 * Required libraries: `[e.g., numpy, matplotlib, or "None (uses standard library)"]`
@@ -29,7 +29,7 @@ To install requirements (if applicable):
 ```bash
 pip install -r requirements.txt
 ```
-**## Respository Structure**
+**Respository Structure**
 
 2DSA2-Group-4/
 
