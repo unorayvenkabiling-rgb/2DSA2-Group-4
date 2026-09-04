@@ -14,8 +14,7 @@ John Christian Ballesteros – Task 5: OOP
 Task 6 Modular Integration was completely collaboratively by all members
 
 **Project Description**
-[Write a short 1-2 sentence summary explaining what the program does.]
-The program
+This program is an engineering calculator that computes for the stress, strain, Young's modulus, and safety factor based on the applied force, area, and deformation.
 
 **Program Features**
 * Single Material Analysis: Calculate Engineering Stress(Pa/Mpa), Engineering Strain, Young's Modulus, and Factor of Safety
@@ -27,13 +26,13 @@ The program
 **Installation / Requirements**
 * Python 3.12.6
 * Visual Studio Code
-* Required libraries: `[e.g., numpy, matplotlib, or "None (uses standard library)"]`
+* Libraries used: dataclasses, typing, datetime, json, csv, pathlib, random
+
 
 To install requirements (if applicable):
-```bash
-pip install -r requirements.txt
-```
-**Respository Structure**
+*Python 3.8 or higher
+* External Packages: None
+
 
 2DSA2-Group-4
 
