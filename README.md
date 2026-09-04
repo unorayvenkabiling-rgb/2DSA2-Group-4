@@ -14,13 +14,9 @@ Task 6 Modular Integration was completely collaboratively by all members
 The program
 
 **## Program Features**
-* Single Material Analysis:
-* Calculate Engineering Stress(Pa/Mpa)
-* Engineering Strain
-* Young's Modulus
-* Factor of Safety
-* [Feature 2: e.g., Displays analysis results graphically or in console]
-* [Feature 3: e.g., Validates material thresholds]
+* Single Material Analysis: Calculate Engineering Stress(Pa/Mpa), Engineering Strain, Young's Modulus, and Factor of Safety
+* Multi Material Comparison: Metals, Plastics and composites with side by side comparison
+* Stimulated Test Data: Physical tests (Force, Area, Length and Deformation)
 
 **## Installation/Requirements**
 * Python 3.12.6
