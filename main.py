@@ -150,7 +150,7 @@ if __name__ == "__main__":
 def run_calculator_task3(history_list, unique_materials, units):
     #Executes the calculator and stores the data in the history list and unique materials set
     print("\n" + " = " * 25)
-    print(" Engineering Stress, Strain, and Safety Analysis Calculator (Task 3)")
+    print(" Engineering Stress, Strain, and Safety Analysis Calculator ")
     print(" = " * 25)
 
     # 1. Material Selection & Set update
