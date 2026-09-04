@@ -46,6 +46,34 @@ class Material:
     def __str__(self) -> str:
         return f"{self.name} [{self.category}] (Yield Strength: {self.yield_strength:.1f} MPa, Young's Modulus: {self.elastic_modulus:.1f} GPa)"
 
+    def __eq__(self, other: object) -> bool:
+        """Two materials are equal if their name and properties match."""
+        if not isinstance(other, Material):
+            return NotImplemented
+        return self.name == other.name and self.properties == other.properties
+
+    def __lt__(self, other: "Material") -> bool:
+        """Materials compare by yield strength, allowing them to be sorted."""
+        if not isinstance(other, Material):
+            return NotImplemented
+        return self.yield_strength < other.yield_strength
+
+    def __gt__(self, other: "Material") -> bool:
+        if not isinstance(other, Material):
+            return NotImplemented
+        return self.yield_strength > other.yield_strength
+
+    @classmethod
+    def from_dict(cls, data: Dict[str, Any]) -> "Material":
+        """Reconstructs a Material from a dictionary produced by to_dict()."""
+        props = MaterialProperties(
+            yield_strength=data["yield_strength_mpa"],
+            elastic_modulus=data["elastic_modulus_gpa"],
+            category=data.get("category", "Metal"),
+            description=data.get("description")
+        )
+        return cls(name=data["name"], properties=props)
+
 
 class Metal(Material):
     """Subclass representing metallic alloys."""
