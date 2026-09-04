@@ -14,6 +14,7 @@ John Christian Ballesteros – Task 5: OOP
 Task 6 Modular Integration was completely collaboratively by all members
 
 **Project Description**
+
 This program is an engineering calculator that computes for the stress, strain, Young's modulus, and safety factor based on the applied force, area, and deformation.
 
 **Program Features**
