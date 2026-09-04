@@ -26,7 +26,7 @@ The program
 To install requirements (if applicable):
 ```bash
 pip install -r requirements.txt
-
+```
 **## Respository Structure**
 2DSA2-Group-4/
 ├── stress_calculator/
