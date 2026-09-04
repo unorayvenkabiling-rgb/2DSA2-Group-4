@@ -30,6 +30,7 @@ pip install -r requirements.txt
 **## Respository Structure**
 
 2DSA2-Group-4/
+
 ├── stress_calculator/
 
 │   ├── __init__.py           # Package marker and metadata
