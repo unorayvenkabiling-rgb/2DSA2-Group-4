@@ -118,10 +118,10 @@ class StressCalculatorApp:
         test = generate_simulated_test()
 
         print("\n[Simulated Physical Measurements Generated via Python random]")
-        print(f" • Force:            {test.force:,.2f} N")
-        print(f" • Area:             {test.area:.6f} m^2")
-        print(f" • Original Length:  {test.original_length:.2f} m")
-        print(f" • Change in Length: {test.change_in_length:.6f} m")
+        print(f" - Force:            {test.force:,.2f} N")
+        print(f" - Area:             {test.area:.6f} m^2")
+        print(f" - Original Length:  {test.original_length:.2f} m")
+        print(f" - Change in Length: {test.change_in_length:.6f} m")
 
         record = evaluate_test_on_material(material, test)
         self.history.add_record(record)
