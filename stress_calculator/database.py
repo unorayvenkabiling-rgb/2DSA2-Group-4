@@ -56,6 +56,21 @@ class MaterialDatabase:
                 return m
         return None
 
+    def save_custom_materials(self, filename: str = "materials_catalog.json") -> Path:
+        """Persists the current catalog to disk."""
+        return save_materials_to_json(self._materials, filename=filename)
+
+    def load_custom_materials(self, filename: str = "materials_catalog.json") -> int:
+        """Loads a catalog from disk, appending any materials not already present by name."""
+        loaded = load_materials_from_json(filename=filename)
+        added = 0
+        existing_names = {m.name.lower() for m in self._materials}
+        for m in loaded:
+            if m.name.lower() not in existing_names:
+                self._materials.append(m)
+                added += 1
+        return added
+
 
 # ==============================================================================
 # STANDARD LIBRARY: PATHLIB & DIRECTORY MANAGEMENT
@@ -95,6 +110,28 @@ def load_session_from_json(filename: str = "session_history.json", directory: Pa
         data = json.load(f)
 
     return [TestRecord.from_dict(item) for item in data]
+
+def save_materials_to_json(materials: List[Material], filename: str = "materials_catalog.json", directory: Path = DEFAULT_DATA_DIR) -> Path:
+    """Saves the current material catalog (including custom materials) to JSON."""
+    ensure_data_directory(directory)
+    filepath = directory / filename
+
+    data = [m.to_dict() for m in materials]
+    with open(filepath, "w", encoding="utf-8") as f:
+        json.dump(data, f, indent=4)
+
+    return filepath
+
+def load_materials_from_json(filename: str = "materials_catalog.json", directory: Path = DEFAULT_DATA_DIR) -> List[Material]:
+    """Loads a previously saved material catalog from JSON."""
+    filepath = directory / filename
+    if not filepath.exists():
+        raise FileNotFoundError(f"Materials catalog not found at: {filepath}")
+
+    with open(filepath, "r", encoding="utf-8") as f:
+        data = json.load(f)
+
+    return [Material.from_dict(item) for item in data]
 
 
 # ==============================================================================
