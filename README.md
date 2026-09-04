@@ -2,9 +2,13 @@
 
 **Group Members**
 Uno Timothy Rayven Kabiling – Task 1: Basic Calculations
+
 Isaiah Collado – Task 2: Control Structures
+
 Jeremiah Daniel Padilla– Task 3: Data Structures
+
 Carlos Gabriel Roman – Task 4: Functions
+
 John Christian Ballesteros – Task 5: OOP
 
 Task 6 Modular Integration was completely collaboratively by all members
