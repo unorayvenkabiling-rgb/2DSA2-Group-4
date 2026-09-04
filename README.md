@@ -14,7 +14,11 @@ Task 6 Modular Integration was completely collaboratively by all members
 The program
 
 **## Program Features**
-* [Feature 1: e.g., Calculates stress and strain from user inputs]
+* Single Material Analysis:
+* Calculate Engineering Stress(Pa/Mpa)
+* Engineering Strain
+* Young's Modulus
+* Factor of Safety
 * [Feature 2: e.g., Displays analysis results graphically or in console]
 * [Feature 3: e.g., Validates material thresholds]
 
