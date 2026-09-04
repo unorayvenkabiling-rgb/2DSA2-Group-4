@@ -17,6 +17,8 @@ The program
 * Single Material Analysis: Calculate Engineering Stress(Pa/Mpa), Engineering Strain, Young's Modulus, and Factor of Safety
 * Multi Material Comparison: Metals, Plastics and composites with side by side comparison
 * Stimulated Test Data: Physical tests (Force, Area, Length and Deformation)
+* Data Persistence: Logs timestamps
+* Session History: Tracks test run
 
 **## Installation/Requirements**
 * Python 3.12.6
