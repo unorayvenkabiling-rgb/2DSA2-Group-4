@@ -184,7 +184,7 @@ def run_calculator_task3(history_list, unique_materials, units):
         "force": applied_force,
         "area": cross_sectional_area,
         "original_length": original_length,
-        "change_length": change_in_length,
+        "change_in_length": change_in_length,
         "stress": stress_mpa,
         "strain": strain,
         "fos": fos,
@@ -208,7 +208,7 @@ def run_calculator_task3(history_list, unique_materials, units):
     print(f" - Applied Force:         {test_data['force']:,.2f} {units[0]}")
     print(f" - Cross Sectional Area:  {test_data['area']:.6f} {units[1]}")
     print(f" - Original Length:       {test_data['original_length']:.4f} {units[2]}")
-    print(f" - Change in Length:      {test_data['change_in length']:.6f} {units[2]}")
+    print(f" - Change in Length:      {test_data['change_in_length']:.6f} {units[2]}")
     print(" - " * 25)
     print("Calculated Outputs:")
     print(f" - Engineering Stress:    {test_data['stress']:,.2f} {units[3]}")
