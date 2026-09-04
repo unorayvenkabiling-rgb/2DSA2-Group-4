@@ -31,12 +31,21 @@ pip install -r requirements.txt
 
 2DSA2-Group-4/
 ├── stress_calculator/
+
 │   ├── __init__.py           # Package marker and metadata
+
 │   ├── properties.py         # MaterialProperties dataclass and validations
+
 │   ├── material.py           # Material base class and Metal, Plastic, Composite subclasses
+
 │   ├── tests.py              # StressStrainTest, TestRecord, and TestCollection models
+
 │   ├── utils.py              # Physics formulas, input validators, and CLI UI helpers
+
 │   ├── database.py           # Material catalogs, JSON/CSV I/O, and test simulator
+
 │   └── main.py               # Package orchestrator and interactive CLI menu
+
 ├── main.py                   # Root execution entry point
+
 └── data/                     # Storage folder for JSON session histories and CSV exports
