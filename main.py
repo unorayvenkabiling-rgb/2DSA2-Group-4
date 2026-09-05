@@ -1,372 +1,85 @@
-#start of uno's part (task 1)
-print(" = " * 50)
-print(" Engineering Stress and Strain Calculator")
-print(" = " * 50)
-print(" PLease enter the requested values below.\n ")
+"""
+2DSA2 - Group 4: Python Fundamentals Coding Challenge
+Final Integrated Project (Task 6: System Integration)
 
-applied_force = float(input("Enter applied force (F) in Newton [N]:"))
-cross_sectional_area = float(input(" Enter cross sectional area (A) in square meters [m^2]: "))
-original_length = float(input(" Enter original length in meters [m]:"))
-change_in_length = float(input(" Enter change in length in meters [m]:"))
+Authors & Task Contributions:
+- Task 1: Basic Calculations & Physics Engine (Kabiling)
+- Task 2: Control Structures, Validation & Safety Logic (Collado)
+- Task 3: Data Structures (Tuples, Lists, Sets, Dictionaries) & History (Padilla)
+- Task 4: Modular Functions & Standardized Formatting (Roman)
+- Task 5: Object-Oriented Design (Classes, Inheritance, Dataclass) (Ballesteros)
+- Task 6: Complete Architectural Integration (Group 4)
+"""
 
-stress = applied_force / cross_sectional_area
-strain = change_in_length / original_length
+from dataclasses import dataclass
+from typing import List, Dict, Set, Optional, Tuple
 
-print("\n" + "=" * 50)
-print(" Calculation results ")
-print("=" * 50)
+# constants and data structures
+# Tuple (immutable)
+UNITS: Tuple[str, ...] = ("N", "m^2", "m", "MPa", "GPa")
 
-print("Input Parameters:")
-print(f" - Applied Force {applied_force:,.2f}N")
-print(f" - Cross Sectional Area: { cross_sectional_area:.6f} m^2")
-print(f" - Original Length: {original_length:4f}m")
-print(f" - Change in Length: {change_in_length:6f}m")
-print(" - " * 50)
-
-
-print(" Calculated Outputs: ")
-print(f" - Engineering Stress: {stress:,.2f}Pa")
-print(f" - Engineering Strain: {strain:.6f}")
-print( " = " * 50)
-#end of uno's part
-
-#task 2 start of isaiah's part
-
-def get_positive_float(prompt, allow_zero=False): #input validation
-  while True:
-    try:
-      val = float(input(prompt))
-      if allow_zero and val < 0:
-        print("Error: The input cannot be negative.")
-        continue
-      elif not allow_zero and val <= 0:
-        print("Error: The input must be strictly greater than zero.")
-        continue
-      return val
-    except ValueError:
-      print("Error: Invalid input. Please enter a numerical value.")
-
-def select_material(): #material selection
-  materials = {
-    "1": ("Steel", 250.0, 200.0),
-    "2": ("Aluminum", 95.0, 69.0),
-    "3": ("Titanium", 880.0, 114.0),
-  }
-
-  print("\n---Material Selection---")
-  print("1. Steel (Yield Strength: 250 MPa, Young's Modulus: 200 GPa)")
-  print("2. Aluminum (Yield Strength: 95 MPa, Young's Modulus: 69 GPa)")
-  print("3. Titanium (Yield Strength: 880 MPa, Young's Modulus: 114 GPa)")
-  print("4. Custom Material")
-
-  while True:
-        choice = input("Select an option (1-4): ").strip()
-        if choice in materials:
-          name, yield_strength, youngs_modulus = materials[choice]
-          return name, yield_strength, youngs_modulus
-        elif choice == "4":
-            name = input("Enter custom material name: ").strip() or "Custom Material"
-            yield_strength = get_positive_float("Enter Yield Strength in MPa: ")
-            youngs_modulus = get_positive_float("Enter Young's Modulus in GPa: ")
-            return name, yield_strength, youngs_modulus
-        else:
-            print("Error: Invalid selection. Please Choose from numbers 1, 2, 3, and 4.")
-
-def run_calculator():
-    print(" = " * 20)
-    print("Stress, Stress, and Safety Analysis Calculator")
-    print(" = " * 20)
-
-    #material selection stuff
-    mat_name, yield_strength_mpa, youngs_module_gpa = select_material()
-
-    #input validation time
-    print("\nPlease enter the requested values below.\n")
-    applied_force = get_positive_float("Enter applied force (F) in Newton (N): ")
-    cross_sectional_area = get_positive_float("Enter cross sectional area (A) in square meter [m^2]: ")
-    original_length = get_positive_float("Enter original length in meters [m]: ")
-    change_in_length = get_positive_float("Enter change in length in meters [m]: ", allow_zero=True)
-
-    #calculations
-    stress_pa = applied_force / cross_sectional_area
-    stress_mpa = stress_pa / 1e6
-    strain = change_in_length / original_length
-
-    #analysis and factor of safety
-    fos = yield_strength_mpa / stress_mpa
-
-    if fos >= 1.2:
-        status = "SAFE"
-    elif 1.0 <= fos < 1.2:
-        status = "CAUTION - Loading near material yield point"
-    else:
-        status = "UNSAFE - Material failure / yielding likely!"
-
-    #output display
-    print("\n" + "=" * 50)
-    print("Calculation results")
-    print("=" * 50)
-
-    print("Material Info:")
-    print(f" - Material Selected: {mat_name}")
-    print(f" - Yield Strength: {yield_strength_mpa:,.2f} MPa")
-    print(f" - Young's Modulus: {youngs_module_gpa:,.2f} GPa")
-
-    print("Input Parameters:")
-    print(f" - Applied Force: {applied_force:,.2f} N")
-    print(f" - Cross Sectional Area: {cross_sectional_area:.6f} m^2")
-    print(f" - Original Length: {original_length:.4f} m")
-    print(f" - Change in Length: {change_in_length:.6f} m")
-
-    print("Calculated Outputs:")
-    print(f" - Engineering Stress:    {stress_mpa:,.2f} MPa ({stress_pa:,.2f} Pa)")
-    print(f" - Engineering Strain:    {strain:.6f}")
-    print(" - " * 25)
-
-    print("Safety Analysis:")
-    print(f" - Factor of Safety:      {fos:.2f}")
-    print(f" - Safety Status:         {status}")
-    print(" = " * 50)
-
-def main():
-    while True:
-      try:
-          run_calculator()
-      except KeyboardInterrupt:
-          print("\n\nProgram force-closed by user. Existing gracefully...")
-          break
-
-      repeat = input("\nWould you like to perform another calculation? (y/n): ").strip().lower()
-      if repeat != 'y':
-          print("Thank you for using the calculator. Program terminated.")
-          break
-
-if __name__ == "__main__":
-  main()
-
-#end of isaiah's part
-
-# start of jeremiah's part (task 3)
-def run_calculator_task3(history_list, unique_materials, units):
-    #Executes the calculator and stores the data in the history list and unique materials set
-    print("\n" + " = " * 25)
-    print(" Engineering Stress, Strain, and Safety Analysis Calculator ")
-    print(" = " * 25)
-
-    # 1. Material Selection & Set update
-    mat_name, yield_strength_mpa, youngs_modulus_gpa = select_material()
-    unique_materials.add(mat_name)
-
-    # 2. Input Validation (Replaces simple float(input()) calls)
-    print("\nPlease enter the requested values below.\n")
-    applied_force = get_positive_float(f"Enter applied force (F) in Newton [{units[0]}]: ")
-    cross_sectional_area = get_positive_float(f"Enter cross sectional area (A) in square meters [{units[1]}]: ")
-    original_length = get_positive_float(f"Enter original length in meters [{units[2]}]: ")
-    change_in_length = get_positive_float(f"Enter change in length in meters [{units[2]}]: ", allow_zero=True)
-
-    # 3. Calculations
-    stress_pa = applied_force / cross_sectional_area
-    stress_mpa = stress_pa / 1e6
-    strain = change_in_length / original_length
-
-    # 4. Safety Analysis & Factor of Safety
-    fos = yield_strength_mpa / stress_mpa
-    if fos >= 1.2:
-        status = "SAFE"
-    elif 1.0 <= fos < 1.2:
-        status = "CAUTION - Loading near material yield point"
-    else:
-        status = "UNSAFE - Material failure / yielding likely!"
-
-    # 5. Dictionary to store the calculation data for history
-    test_data = {
-        "material": mat_name,
-        "force": applied_force,
-        "area": cross_sectional_area,
-        "original_length": original_length,
-        "change_in_length": change_in_length,
-        "stress": stress_mpa,
-        "strain": strain,
-        "fos": fos,
-        "Young's Modulus": youngs_modulus_gpa,
-        "safety result": status
-    }
-
-    #6. List to store the test data for history
-    history_list.append(test_data)
-
-    #Output Display
-    print("\n" + "=" * 50)
-    print(" Calculation results ")
-    print("=" * 50)
-    print("Material Info:")
-    print(f" - Material Selected: {test_data['material']}")
-    print(f" - Yield Strength:    {yield_strength_mpa:,.2f} {units[3]}")
-    print(f" - Young's Modulus:   {youngs_modulus_gpa:,.2f} {units[4]}")
-    print(" - " * 25)
-    print("Input Parameters:")
-    print(f" - Applied Force:         {test_data['force']:,.2f} {units[0]}")
-    print(f" - Cross Sectional Area:  {test_data['area']:.6f} {units[1]}")
-    print(f" - Original Length:       {test_data['original_length']:.4f} {units[2]}")
-    print(f" - Change in Length:      {test_data['change_in_length']:.6f} {units[2]}")
-    print(" - " * 25)
-    print("Calculated Outputs:")
-    print(f" - Engineering Stress:    {test_data['stress']:,.2f} {units[3]}")
-    print(f" - Engineering Strain:    {test_data['strain']:.6f}")
-    print(" - " * 25)
-    print("Safety Analysis:")
-    print(f" - Factor of Safety:      {test_data['fos']:.2f}")
-    print(f" - Safety Status:         {test_data['safety result']}")
-    print(" = " * 50)
-
-def session_summary(history_list, unique_materials):
-    #Displays the session summary with  basic statistical information
-    print("\n" + "=" * 50)
-    print(" SESSION SUMMARY REPORT ")
-    print("=" * 50)
-
-    total_calculations = len(history_list)
-    if total_calculations == 0:
-        print("No calculations were performed during this session.")
-        return
-
-    safe_tests = sum(1 for data in history_list if data['safety result'] == "SAFE")
-    stress_values = [data['stress'] for data in history_list]
-    max_stress = max(stress_values)
-    min_stress = min(stress_values)
-    avg_stress = sum(stress_values) / total_calculations
-
-    print(f"Total Calculations Performed: {total_calculations}")
-    print(f"Unique Materials Tested: {', '.join(unique_materials)}")
-    print(f"Total Safe Tests: {safe_tests} out of {total_calculations}")
-    print(" - " * 25)
-    print("STRESS STATISTICS:")
-    print(f" Highest Stress Recorded: {max_stress:,.2f} MPa")
-    print(f" Lowest Stress Recorded: {min_stress:,.2f} MPa")
-    print(f" Average Stress Across Tests: {avg_stress:,.2f} MPa")
-
-def main_task3():
-    """Main loop for repeated calculations."""
-    #TUPLE: Values that should remain constant
-    #constant_values = ("N", "m^2", "m", "MPa", "GPa")
-
-    #LIST: Stores the history of calculations performed in the session
-    #session_history = []
-
-    #SET: Stores unique materials tested during the session
-    #session_materials = set()
-
-    history_list = []
-    unique_materials = set()
-    units = ["N", "m^2", "m", "MPa", "GPa"]  # Units for force, area, length, stress, modulus
-
-    while True:
-        try:
-            run_calculator_task3(history_list, unique_materials, units)
-        except KeyboardInterrupt:
-            print("\n\nProgram force-closed by user. Exiting gracefully...")
-            break
-
-        # Repeated Calculations check
-        repeat = input("\nWould you like to perform another calculation? (y/n): ").strip().lower()
-        if repeat != 'y':
-            print("Thank you for using the calculator. Program terminated gracefully.")
-            break
-
-if __name__ == "__main__":
-    main_task3()
-
-#end of jeremiah's part(task 3)
-
-# start of roman's part (task 4)
-
-def get_positive_float(prompt, allow_zero=False):
+# input validation and control structures
+def get_positive_float(prompt: str, allow_zero: bool = False) -> float:
     """
-    Handles input validation and exception handling for numerical inputs.
-    Prevents negative values, non-numeric values, and zero where invalid.
+    Validates numeric user inputs with robust exception handling.
+    Rejects non-numeric entries, negative numbers, and zero when disallowed.
     """
     while True:
         try:
             val = float(input(prompt))
             if allow_zero and val < 0:
-                print(" Error: Input cannot be negative.")
+                print(" Error: The input cannot be negative.")
                 continue
             elif not allow_zero and val <= 0:
-                print(" Error: Input must be strictly greater than zero.")
+                print(" Error: The input must be strictly greater than zero.")
                 continue
             return val
         except ValueError:
             print(" Error: Invalid input. Please enter a numerical value.")
 
 
-def get_yes_no(prompt):
-    """Asks a yes/no question and returns True or False."""
+def get_yes_no(prompt: str) -> bool:
+    """Prompts for a (y/n) confirmation with strict input validation."""
     while True:
-        answer = input(prompt).strip().lower()
-        if answer in ("y", "n"):
-            return answer == "y"
-        print(" Error: Please enter 'y' or 'n'.")
+        choice = input(prompt).strip().lower()
+        if choice in ("y", "yes"):
+            return True
+        elif choice in ("n", "no"):
+            return False
+        print(" Error: Please respond with 'y' or 'n'.")
 
-
-def get_predefined_materials():
-    """Returns the dictionary of predefined material properties."""
-    return {
-        "1": ("Steel", 250.0, 200.0),
-        "2": ("Aluminum", 95.0, 69.0),
-        "3": ("Titanium", 880.0, 114.0)
-    }
-
-
-def select_material():
-    """
-    Provides material selection menu with predefined engineering properties
-    and allows entering custom properties.
-    """
-    materials = get_predefined_materials()
-
-    print("\n--- Material Selection ---")
-    print("1. Steel (Yield Strength: 250 MPa, Young's Modulus: 200 GPa)")
-    print("2. Aluminum (Yield Strength: 95 MPa, Young's Modulus: 69 GPa)")
-    print("3. Titanium (Yield Strength: 880 MPa, Young's Modulus: 114 GPa)")
-    print("4. Custom Material")
-
-    while True:
-        choice = input("Select an option (1-4): ").strip()
-        if choice in materials:
-            return materials[choice]
-        elif choice == "4":
-            name = input("Enter custom material name: ").strip() or "Custom Material"
-            yield_strength = get_positive_float("Enter Yield Strength in MPa: ")
-            youngs_modulus = get_positive_float("Enter Young's Modulus in GPa: ")
-            return name, yield_strength, youngs_modulus
-        else:
-            print(" Error: Invalid selection. Please choose options 1, 2, 3, or 4.")
-
-
-def calculate_stress(force, area):
-    """Calculates engineering stress in Pascals (stress = force / area)."""
+# core formulas and modular functions
+def calculate_stress_pa(force: float, area: float) -> float:
+    """Engineering Stress: sigma = Force / Area (in Pascals [Pa])."""
     return force / area
 
 
-def calculate_strain(change_in_length, original_length):
-    """Calculates engineering strain (change in length / original length)."""
+def calculate_stress_mpa(stress_pa: float) -> float:
+    """Converts Stress from Pascals to Megapascals [MPa]."""
+    return stress_pa / 1e6
+
+
+def calculate_strain(change_in_length: float, original_length: float) -> float:
+    """Engineering Strain: epsilon = delta_L / L_0 (dimensionless)."""
     return change_in_length / original_length
 
 
-def calculate_youngs_modulus(stress_pa, strain):
-    """Calculates Young's Modulus from test data in GPa (E = stress / strain)."""
+def calculate_youngs_modulus_gpa(stress_pa: float, strain: float) -> float:
+    """Calculated Young's Modulus: E = sigma / epsilon (in Gigapascals [GPa])."""
     if strain == 0:
         return 0.0
     return (stress_pa / strain) / 1e9
 
 
-def calculate_factor_of_safety(yield_strength_mpa, stress_mpa):
-    """Calculates the Factor of Safety (FOS = yield strength / stress)."""
+def calculate_factor_of_safety(yield_strength_mpa: float, stress_mpa: float) -> float:
+    """Factor of Safety: FOS = Yield Strength / Working Stress."""
+    if stress_mpa == 0:
+        return 0.0
     return yield_strength_mpa / stress_mpa
 
 
-def determine_safety_status(fos):
-    """Classifies safety status based on the Factor of Safety."""
+def determine_safety_status(fos: float) -> str:
+    """Categorizes the structural safety status based on Factor of Safety."""
     if fos >= 1.2:
         return "SAFE"
     elif 1.0 <= fos < 1.2:
@@ -375,159 +88,293 @@ def determine_safety_status(fos):
         return "UNSAFE - Material failure / yielding likely!"
 
 
-def create_test_record(mat_name, force, area, original_length, change_in_length,
-                        stress_mpa, strain, rated_modulus_gpa, calculated_modulus_gpa,
-                        fos, status):
-    """Builds and returns a dictionary for one completed test."""
-    return {
-        "material": mat_name,
-        "force": force,
-        "area": area,
-        "original_length": original_length,
-        "change_in_length": change_in_length,
-        "stress": stress_mpa,
-        "strain": strain,
-        "rated_youngs_modulus": rated_modulus_gpa,
-        "calculated_youngs_modulus": calculated_modulus_gpa,
-        "fos": fos,
-        "safety_result": status
-    }
+# object-oriented data models
+@dataclass
+class StressStrainTest:
+    """Encapsulates the physical measurements of a tension/compression test."""
+    force: float            # Applied Force in Newtons (N)
+    area: float             # Cross-Sectional Area in square meters (m^2)
+    original_length: float  # Original Length in meters (m)
+    change_in_length: float # Change in Length in meters (m)
 
 
-def add_test_record(history_list, unique_materials, record):
-    """Adds a test record to the history list and updates unique materials."""
-    history_list.append(record)
-    unique_materials.add(record["material"])
+class Material:
+    """Base class modeling engineering materials, physical properties, and analysis."""
+
+    def __init__(self, name: str, yield_strength: float, elastic_modulus: float):
+        self.name: str = name
+        self._yield_strength: float = yield_strength      # in MPa
+        self._elastic_modulus: float = elastic_modulus    # in GPa
+
+    @property
+    def yield_strength(self) -> float:
+        """Rated Yield Strength in MPa."""
+        return self._yield_strength
+
+    @property
+    def elastic_modulus(self) -> float:
+        """Rated Young's Modulus in GPa."""
+        return self._elastic_modulus
+
+    def evaluate_test(self, test: StressStrainTest) -> Dict[str, any]:
+        """
+        DICTIONARY:
+        Evaluates the material under the given test parameters and returns a complete record.
+        """
+        stress_pa = calculate_stress_pa(test.force, test.area)
+        stress_mpa = calculate_stress_mpa(stress_pa)
+        strain = calculate_strain(test.change_in_length, test.original_length)
+        calc_modulus = calculate_youngs_modulus_gpa(stress_pa, strain)
+        fos = calculate_factor_of_safety(self.yield_strength, stress_mpa)
+        status = determine_safety_status(fos)
+
+        return {
+            "material": self.name,
+            "force": test.force,
+            "area": test.area,
+            "original_length": test.original_length,
+            "change_in_length": test.change_in_length,
+            "stress_pa": stress_pa,
+            "stress_mpa": stress_mpa,
+            "strain": strain,
+            "rated_modulus_gpa": self.elastic_modulus,
+            "calculated_modulus_gpa": calc_modulus,
+            "yield_strength_mpa": self.yield_strength,
+            "fos": fos,
+            "safety_status": status
+        }
+
+    def __str__(self) -> str:
+        return f"{self.name} (Yield Strength: {self._yield_strength:.1f} MPa, Young's Modulus: {self._elastic_modulus:.1f} GPa)"
 
 
-def compute_session_statistics(history_list):
-    """Computes total, safe count, and stress statistics from test history."""
-    total = len(history_list)
-    if total == 0:
-        return None
-
-    safe_tests = sum(1 for record in history_list if record["safety_result"] == "SAFE")
-    stress_values = [record["stress"] for record in history_list]
-
-    return {
-        "total": total,
-        "safe_tests": safe_tests,
-        "max_stress": max(stress_values),
-        "min_stress": min(stress_values),
-        "avg_stress": sum(stress_values) / total
-    }
+# Polymorphic subclasses representing material categories
+class Metal(Material):
+    """Subclass representing metallic alloys."""
+    def __init__(self, name: str = "Structural Steel", yield_strength: float = 250.0, elastic_modulus: float = 200.0):
+        super().__init__(name, yield_strength, elastic_modulus)
 
 
-def display_header(title):
-    print("\n" + "=" * 50)
-    print(f" {title} ")
-    print("=" * 50)
+class Plastic(Material):
+    """Subclass representing polymers and plastics."""
+    def __init__(self, name: str = "ABS Polymer", yield_strength: float = 45.0, elastic_modulus: float = 2.5):
+        super().__init__(name, yield_strength, elastic_modulus)
 
 
-def display_material_info(mat_name, yield_strength_mpa, youngs_modulus_gpa, units):
-    print("Material Info:")
-    print(f" - Material Selected: {mat_name}")
-    print(f" - Yield Strength:    {yield_strength_mpa:,.2f} {units[3]}")
-    print(f" - Young's Modulus (Rated): {youngs_modulus_gpa:,.2f} {units[4]}")
-    print(" - " * 25)
+class Composite(Material):
+    """Subclass representing composite materials."""
+    def __init__(self, name: str = "Carbon Fiber Composite", yield_strength: float = 500.0, elastic_modulus: float = 120.0):
+        super().__init__(name, yield_strength, elastic_modulus)
+
+# formatting and presentation
+BANNER_WIDTH = 61
 
 
-def display_input_parameters(force, area, original_length, change_in_length, units):
-    print("Input Parameters:")
-    print(f" - Applied Force:         {force:,.2f} {units[0]}")
-    print(f" - Cross Sectional Area:  {area:.6f} {units[1]}")
-    print(f" - Original Length:       {original_length:.4f} {units[2]}")
-    print(f" - Change in Length:      {change_in_length:.6f} {units[2]}")
-    print(" - " * 25)
+def display_header(title: str) -> None:
+    width = max(BANNER_WIDTH, len(title) + 2)
+    print("\n" + "=" * width)
+    print(f" {title}")
+    print("=" * width)
 
 
-def display_results(stress_mpa, stress_pa, strain, calculated_modulus_gpa, units):
-    print("Calculated Outputs:")
-    print(f" - Engineering Stress:    {stress_mpa:,.2f} {units[3]} ({stress_pa:,.2f} Pa)")
-    print(f" - Engineering Strain:    {strain:.6f}")
-    print(f" - Young's Modulus (Calculated): {calculated_modulus_gpa:,.2f} {units[4]}")
-    print(" - " * 25)
-
-
-def display_safety_analysis(fos, status):
-    print("Safety Analysis:")
-    print(f" - Factor of Safety:      {fos:.2f}")
-    print(f" - Safety Status:         {status}")
-    print("=" * 50)
-
-
-def display_session_summary(stats, unique_materials):
-    display_header("SESSION SUMMARY REPORT")
-
-    if stats is None:
-        print("No calculations were performed during this session.")
-        return
-
-    print(f"Total Calculations Performed: {stats['total']}")
-    print(f"Unique Materials Tested: {', '.join(unique_materials)}")
-    print(f"Total Safe Tests: {stats['safe_tests']} out of {stats['total']}")
-    print(" - " * 25)
-    print("STRESS STATISTICS:")
-    print(f" Highest Stress Recorded: {stats['max_stress']:,.2f} MPa")
-    print(f" Lowest Stress Recorded:  {stats['min_stress']:,.2f} MPa")
-    print(f" Average Stress Across Tests: {stats['avg_stress']:,.2f} MPa")
-
-
-def run_single_test(history_list, unique_materials, units):
-    """Runs one full test cycle: input, calculation, display, and storage."""
-    display_header("Engineering Stress, Strain, and Safety Analysis Calculator (Task 4)")
-
-    mat_name, yield_strength_mpa, rated_modulus_gpa = select_material()
-
-    print("\nPlease enter the requested values below.\n")
-    force = get_positive_float(f"Enter applied force (F) in Newton [{units[0]}]: ")
-    area = get_positive_float(f"Enter cross sectional area (A) in square meters [{units[1]}]: ")
-    original_length = get_positive_float(f"Enter original length in meters [{units[2]}]: ")
-    change_in_length = get_positive_float(
-        f"Enter change in length in meters [{units[2]}]: ", allow_zero=True
-    )
-
-    stress_pa = calculate_stress(force, area)
-    stress_mpa = stress_pa / 1e6
-    strain = calculate_strain(change_in_length, original_length)
-    calculated_modulus_gpa = calculate_youngs_modulus(stress_pa, strain)
-    fos = calculate_factor_of_safety(yield_strength_mpa, stress_mpa)
-    status = determine_safety_status(fos)
-
-    record = create_test_record(
-        mat_name, force, area, original_length, change_in_length,
-        stress_mpa, strain, rated_modulus_gpa, calculated_modulus_gpa, fos, status
-    )
-    add_test_record(history_list, unique_materials, record)
-
+def display_test_record(record: Dict[str, any], units: Tuple[str, ...] = UNITS) -> None:
+    """Formats and prints a single completed test record with precision."""
     display_header("Calculation Results")
-    display_material_info(mat_name, yield_strength_mpa, rated_modulus_gpa, units)
-    display_input_parameters(force, area, original_length, change_in_length, units)
-    display_results(stress_mpa, stress_pa, strain, calculated_modulus_gpa, units)
-    display_safety_analysis(fos, status)
+
+    print("Material Info:")
+    print(f" - Material Selected:     {record['material']}")
+    print(f" - Yield Strength:        {record['yield_strength_mpa']:,.2f} {units[3]}")
+    print(f" - Rated Young's Modulus: {record['rated_modulus_gpa']:,.2f} {units[4]}")
+    print(" - " * 20)
+
+    print("Input Parameters:")
+    print(f" - Applied Force:         {record['force']:,.2f} {units[0]}")
+    print(f" - Cross Sectional Area:  {record['area']:.6f} {units[1]}")
+    print(f" - Original Length:       {record['original_length']:.4f} {units[2]}")
+    print(f" - Change in Length:      {record['change_in_length']:.6f} {units[2]}")
+    print(" - " * 20)
+
+    print("Calculated Outputs:")
+    print(f" - Engineering Stress:    {record['stress_mpa']:,.2f} {units[3]} ({record['stress_pa']:,.2f} Pa)")
+    print(f" - Engineering Strain:    {record['strain']:.6f}")
+    print(f" - Calc. Young's Modulus: {record['calculated_modulus_gpa']:,.2f} {units[4]}")
+    print(" - " * 20)
+
+    print("Safety Analysis:")
+    print(f" - Factor of Safety:      {record['fos']:.2f}")
+    print(f" - Safety Status:         {record['safety_status']}")
+    print("=" * BANNER_WIDTH)
 
 
-def main():
-    """Main loop for repeated calculations, ending with a session summary."""
-    history_list = []
-    unique_materials = set()
-    units = ["N", "m^2", "m", "MPa", "GPa"]
+# system composition and session management
+class StressAnalysisSystem:
+    """
+    Composition Manager that coordinates materials, tests,
+    session history logging (List), unique materials (Set), and statistical summaries.
+    """
+
+    def __init__(self):
+        # List(stores all individual test records)
+        self.history_list: List[Dict[str, any]] = []
+        # Set(tracks unique material names tested_
+        self.unique_materials: Set[str] = set()
+        # Catalog of pre-configured materials
+        self.materials_catalog: List[Material] = [
+            Metal("Steel", yield_strength=250.0, elastic_modulus=200.0),
+            Metal("Aluminum", yield_strength=95.0, elastic_modulus=69.0),
+            Metal("Titanium", yield_strength=880.0, elastic_modulus=114.0),
+            Plastic("ABS Polymer", yield_strength=45.0, elastic_modulus=2.5),
+            Composite("Carbon Fiber", yield_strength=500.0, elastic_modulus=120.0),
+        ]
+
+    def add_material_to_catalog(self, material: Material) -> None:
+        """Adds a custom material to the system catalog."""
+        self.materials_catalog.append(material)
+
+    def log_record(self, record: Dict[str, any]) -> None:
+        """Stores test record into history list and updates unique materials set."""
+        self.history_list.append(record)
+        self.unique_materials.add(record["material"])
+
+    def select_material_dialog(self) -> Material:
+        """Presents an interactive menu to choose an existing or custom material."""
+        print("\n--- Material Selection ---")
+        for i, mat in enumerate(self.materials_catalog, start=1):
+            print(f"{i}. {mat}")
+        print(f"{len(self.materials_catalog) + 1}. Create Custom Material")
+
+        num_options = len(self.materials_catalog) + 1
+        while True:
+            choice = input(f"Select an option (1-{num_options}): ").strip()
+            if choice.isdigit():
+                idx = int(choice)
+                if 1 <= idx <= len(self.materials_catalog):
+                    return self.materials_catalog[idx - 1]
+                elif idx == num_options:
+                    # Custom material creation
+                    name = input("Enter custom material name: ").strip() or "Custom Material"
+                    ys = get_positive_float(f"Enter Yield Strength in {UNITS[3]}: ")
+                    mod = get_positive_float(f"Enter Young's Modulus in {UNITS[4]}: ")
+                    custom_mat = Material(name, ys, mod)
+                    self.add_material_to_catalog(custom_mat)
+                    return custom_mat
+            print(f"Error: Please choose a valid number from 1 to {num_options}.")
+
+    def prompt_test_parameters(self) -> StressStrainTest:
+        """Collects and validates input parameters for a physical test run."""
+        print("\nPlease enter the test parameters below:\n")
+        force = get_positive_float(f"Enter applied force (F) in Newton [{UNITS[0]}]: ")
+        area = get_positive_float(f"Enter cross sectional area (A) in square meters [{UNITS[1]}]: ")
+        orig_len = get_positive_float(f"Enter original length in meters [{UNITS[2]}]: ")
+        chg_len = get_positive_float(f"Enter change in length in meters [{UNITS[2]}]: ", allow_zero=True)
+
+        return StressStrainTest(
+            force=force,
+            area=area,
+            original_length=orig_len,
+            change_in_length=chg_len
+        )
+
+    def run_single_test(self) -> None:
+        """Conducts a single test cycle on a chosen material and logs results."""
+        material = self.select_material_dialog()
+        test = self.prompt_test_parameters()
+
+        record = material.evaluate_test(test)
+        self.log_record(record)
+        display_test_record(record)
+
+    def run_multi_material_comparison(self) -> None:
+        """
+        TASK 5 OOP FEATURE:
+        Evaluates a single set of test parameters across ALL catalog materials simultaneously.
+        """
+        display_header("Multi-Material Comparison Analysis")
+        test = self.prompt_test_parameters()
+
+        print("\n" + "=" * BANNER_WIDTH)
+        print(f"{'Material':<15} | {'Stress (MPa)':<12} | {'Strain':<10} | {'FOS':<6} | {'Status'}")
+        print("-" * BANNER_WIDTH)
+
+        for mat in self.materials_catalog:
+            record = mat.evaluate_test(test)
+            self.log_record(record)
+            print(f"{record['material']:<15} | {record['stress_mpa']:<12.2f} | {record['strain']:<10.6f} | {record['fos']:<6.2f} | {record['safety_status']}")
+        print("=" * BANNER_WIDTH)
+
+    def display_session_summary(self) -> None:
+        """
+        SESSION SUMMARY REPORT (Task 3 & Task 4):
+        Aggregates and prints comprehensive session statistics.
+        """
+        display_header("SESSION SUMMARY REPORT")
+
+        total = len(self.history_list)
+        if total == 0:
+            print("No calculations were performed during this session.")
+            return
+
+        safe_tests = sum(1 for rec in self.history_list if rec["safety_status"] == "SAFE")
+        stress_vals = [rec["stress_mpa"] for rec in self.history_list]
+        max_stress = max(stress_vals)
+        min_stress = min(stress_vals)
+        avg_stress = sum(stress_vals) / total
+
+        print(f"Total Calculations Performed: {total}")
+        print(f"Unique Materials Tested:      {', '.join(sorted(self.unique_materials))}")
+        print(f"Total Safe Tests:             {safe_tests} out of {total}")
+        print(" - " * 20)
+        print("STRESS STATISTICS:")
+        print(f" - Highest Stress Recorded:   {max_stress:,.2f} {UNITS[3]}")
+        print(f" - Lowest Stress Recorded:    {min_stress:,.2f} {UNITS[3]}")
+        print(f" - Average Stress Across:     {avg_stress:,.2f} {UNITS[3]}")
+        print("=" * BANNER_WIDTH)
+
+
+# main application entry point
+def main() -> None:
+    """Main interactive execution loop."""
+    system = StressAnalysisSystem()
+
+    display_header("Engineering Stress, Strain, and Safety Analysis Calculator")
+    print("Welcome to the Group 4 Integrated Material Testing Suite.")
 
     while True:
         try:
-            run_single_test(history_list, unique_materials, units)
+            print("\nSelect Mode:")
+            print(" 1. Single Material Analysis")
+            print(" 2. Multi-Material Comparative Analysis")
+            print(" 3. View Current Session Statistics")
+            print(" 4. Exit Application")
+
+            choice = input("\nEnter choice (1-4): ").strip()
+
+            if choice == "1":
+                system.run_single_test()
+            elif choice == "2":
+                system.run_multi_material_comparison()
+            elif choice == "3":
+                system.display_session_summary()
+            elif choice == "4":
+                print("\nTerminating session...")
+                break
+            else:
+                print("Error: Invalid choice. Please enter 1, 2, 3, or 4.")
+                continue
+
+            # Prompt to continue or exit
+            if not get_yes_no("\nWould you like to perform another action? (y/n): "):
+                print("\nTerminating session...")
+                break
+
         except KeyboardInterrupt:
-            print("\n\nProgram force-closed by user. Exiting gracefully...")
+            print("\n\nProgram interrupted by user. Exiting gracefully...")
             break
 
-        if not get_yes_no("\nWould you like to perform another calculation? (y/n): "):
-            print("Thank you for using the calculator. Program terminated gracefully.")
-            break
-
-    display_session_summary(compute_session_statistics(history_list), unique_materials)
+    # Guaranteed Session Summary Report on exit
+    system.display_session_summary()
+    print("\nThank you for using the calculator. Program terminated successfully.")
 
 
 if __name__ == "__main__":
     main()
-
-# end of roman's part (task 4)

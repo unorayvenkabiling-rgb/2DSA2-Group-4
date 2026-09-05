@@ -169,18 +169,6 @@ class StressCalculatorApp:
         except Exception as e:
             print(f"\n Error loading JSON: {e}")
 
-    def save_materials_action(self) -> None:
-        """Saves the current material catalog (including custom materials) to JSON."""
-        path = self.db.save_custom_materials()
-        print(f"\n Successfully saved material catalog to: {path.resolve()}")
-
-    def load_materials_action(self) -> None:
-        """Loads a previously saved material catalog from JSON."""
-        try:
-            added = self.db.load_custom_materials()
-            print(f"\n Loaded catalog — {added} new material(s) added.")
-        except FileNotFoundError as e:
-            print(f"\n Error: {e}")
 
 def main() -> None:
     """Main application loop coordinating all modules."""
@@ -199,11 +187,9 @@ def main() -> None:
             print(" 5. Export Test Data to CSV (csv)")
             print(" 6. Save Session History to JSON (json)")
             print(" 7. Load Session History from JSON (json)")
-            print(" 8. Save Custom Materials Catalog (json)")
-            print(" 9. Load Custom Materials Catalog (json)")
-            print(" 10. Exit Application")
+            print(" 8. Exit Application")
 
-            choice = input("\nEnter choice (1-10): ").strip()
+            choice = input("\nEnter choice (1-8): ").strip()
 
             if choice == "1":
                 app.run_single_analysis()
@@ -220,14 +206,10 @@ def main() -> None:
             elif choice == "7":
                 app.load_from_json_action()
             elif choice == "8":
-                app.save_materials_action()
-            elif choice == "9":
-                app.load_materials_action()
-            elif choice == "10":
                 print("\nTerminating session...")
                 break
             else:
-                print("Error: Invalid selection. Please choose an option from 1 to 10.")
+                print("Error: Invalid selection. Please choose an option from 1 to 8.")
                 continue
 
             if not get_yes_no("\nWould you like to perform another action? (y/n): "):

@@ -53,7 +53,7 @@ class Material:
         return self.name == other.name and self.properties == other.properties
 
     def __lt__(self, other: "Material") -> bool:
-        """Materials compare by yield strength, allowing them to be sorted."""
+        """Materials compare by yield strength, so they can be sorted by strength."""
         if not isinstance(other, Material):
             return NotImplemented
         return self.yield_strength < other.yield_strength

@@ -16,11 +16,13 @@ from .properties import MaterialProperties
 from .tests import StressStrainTest, TestRecord
 
 
-# default directory
+# Default directory for persistent data and exports
 DEFAULT_DATA_DIR = Path("data")
 
 
+# ==============================================================================
 # PREDEFINED MATERIALS DATABASE
+# ==============================================================================
 def get_default_materials() -> List[Material]:
     """Returns the baseline library of pre-configured engineering materials."""
     return [
@@ -70,14 +72,18 @@ class MaterialDatabase:
         return added
 
 
+# ==============================================================================
 # STANDARD LIBRARY: PATHLIB & DIRECTORY MANAGEMENT
+# ==============================================================================
 def ensure_data_directory(directory: Path = DEFAULT_DATA_DIR) -> Path:
     """Ensures that the target directory exists, creating parent folders if necessary."""
     directory.mkdir(parents=True, exist_ok=True)
     return directory
 
 
+# ==============================================================================
 # STANDARD LIBRARY: JSON (SAVING & LOADING SESSIONS)
+# ==============================================================================
 def save_session_to_json(records: List[TestRecord], filename: str = "session_history.json", directory: Path = DEFAULT_DATA_DIR) -> Path:
     """
     Saves a collection of test records to a JSON file.
@@ -116,6 +122,7 @@ def save_materials_to_json(materials: List[Material], filename: str = "materials
 
     return filepath
 
+
 def load_materials_from_json(filename: str = "materials_catalog.json", directory: Path = DEFAULT_DATA_DIR) -> List[Material]:
     """Loads a previously saved material catalog from JSON."""
     filepath = directory / filename
@@ -128,7 +135,9 @@ def load_materials_from_json(filename: str = "materials_catalog.json", directory
     return [Material.from_dict(item) for item in data]
 
 
+# ==============================================================================
 # STANDARD LIBRARY: CSV (EXPORTING TEST DATA)
+# ==============================================================================
 def export_session_to_csv(records: List[TestRecord], filename: str = "test_export.csv", directory: Path = DEFAULT_DATA_DIR) -> Path:
     """
     Exports test records into a standardized CSV spreadsheet format.
@@ -152,7 +161,9 @@ def export_session_to_csv(records: List[TestRecord], filename: str = "test_expor
     return filepath
 
 
+# ==============================================================================
 # STANDARD LIBRARY: RANDOM (SIMULATED TEST DATA GENERATOR)
+# ==============================================================================
 def generate_simulated_test(target_safety: str = "random") -> StressStrainTest:
     """
     Generates realistic, randomized engineering test parameters for simulation.
@@ -160,18 +171,23 @@ def generate_simulated_test(target_safety: str = "random") -> StressStrainTest:
     Args:
         target_safety: 'safe', 'caution', 'unsafe', or 'random'
     """
-
+    # Random realistic original length between 0.5m and 12.0m
     original_length = round(random.uniform(0.5, 10.0), 2)
 
+    # Random realistic cross-sectional area between 0.001 m^2 and 0.05 m^2
     area = round(random.uniform(0.002, 0.025), 6)
 
+    # Random force between 5,000 N and 120,000 N
     force = round(random.uniform(5000.0, 100000.0), 2)
 
+    # Calculate resulting stress in Pa
     stress_pa = force / area
 
+    # Choose a simulated modulus between 50 GPa and 220 GPa to estimate plausible strain
     assumed_e_pa = random.uniform(60.0, 200.0) * 1e9
     plausible_strain = stress_pa / assumed_e_pa
 
+    # Change in length based on strain
     change_in_length = round(plausible_strain * original_length, 6)
 
     return StressStrainTest(
