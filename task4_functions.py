@@ -60,7 +60,7 @@ def select_material():
         if choice in materials:
             return materials[choice]
         elif choice == "4":
-            name = input("Enter custom material name: ").strip() or "Custom Material"
+            name = get_valid_name("Enter custom material name: ")
             yield_strength = get_positive_float("Enter Yield Strength in MPa: ")
             youngs_modulus = get_positive_float("Enter Young's Modulus in GPa: ")
             return name, yield_strength, youngs_modulus
