@@ -56,13 +56,6 @@ class MaterialDatabase:
                 return m
         return None
 
-    def find_by_name(self, name: str) -> Optional[Material]:
-        """Searches for a material by name (case-insensitive)."""
-        for m in self._materials:
-            if m.name.lower() == name.lower():
-                return m
-        return None
-
     def save_custom_materials(self, filename: str = "materials_catalog.json") -> Path:
         """Persists the current catalog to disk."""
         return save_materials_to_json(self._materials, filename=filename)
