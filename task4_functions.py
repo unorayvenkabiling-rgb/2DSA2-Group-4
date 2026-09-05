@@ -27,6 +27,11 @@ def get_yes_no(prompt):
             return answer == "y"
         print(" Error: Please enter 'y' or 'n'.")
 
+def get_valid_name(prompt, default="Custom Material"):
+    """Asks for a name, rejecting blank input by falling back to a default."""
+    name = input(prompt).strip()
+    return name if name else default
+
 
 def get_predefined_materials():
     """Returns the dictionary of predefined material properties."""
@@ -119,6 +124,12 @@ def add_test_record(history_list, unique_materials, record):
     history_list.append(record)
     unique_materials.add(record["material"])
 
+def find_tests_by_material(history_list, material_name):
+    """Returns all test records in history matching the given material name."""
+    return [
+        record for record in history_list
+        if record["material"].lower() == material_name.lower()
+    ]
 
 def compute_session_statistics(history_list):
     """Computes total, safe count, and stress statistics from test history."""
