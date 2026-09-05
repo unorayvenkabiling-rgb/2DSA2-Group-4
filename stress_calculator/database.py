@@ -129,8 +129,27 @@ def load_materials_from_json(filename: str = "materials_catalog.json", directory
 
 
 # STANDARD LIBRARY: CSV (EXPORTING TEST DATA)
+def export_session_to_csv(records: List[TestRecord], filename: str = "test_export.csv", directory: Path = DEFAULT_DATA_DIR) -> Path:
+    """
+    Exports test records into a standardized CSV spreadsheet format.
+    """
+    ensure_data_directory(directory)
+    filepath = directory / filename
 
+    fieldnames = [
+        "timestamp", "material", "category", "force", "area", "original_length",
+        "change_in_length", "stress_pa", "stress_mpa", "strain",
+        "rated_modulus_gpa", "calculated_modulus_gpa", "yield_strength_mpa",
+        "fos", "safety_status"
+    ]
 
+    with open(filepath, "w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=fieldnames)
+        writer.writeheader()
+        for record in records:
+            writer.writerow(record.to_dict())
+
+    return filepath
 
 
 # ==============================================================================
