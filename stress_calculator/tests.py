@@ -199,4 +199,13 @@ class TestCollection:
             print("No calculations were performed during this session.")
             return
 
+        print(f"Total Calculations Performed: {stats['total']}")
+        print(f"Unique Materials Tested:      {', '.join(stats['unique_materials'])}")
+        print(f"Total Safe Tests:             {stats['safe_count']} out of {stats['total']}")
+        print(" - " * 20)
+        print("STRESS STATISTICS:")
+        print(f" - Highest Stress Recorded:   {stats['max_stress']:,.2f} {UNITS[3]}")
+        print(f" - Lowest Stress Recorded:    {stats['min_stress']:,.2f} {UNITS[3]}")
+        print(f" - Average Stress Across:     {stats['avg_stress']:,.2f} {UNITS[3]}")
+        print("=" * BANNER_WIDTH)
 
