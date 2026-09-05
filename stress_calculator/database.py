@@ -152,9 +152,7 @@ def export_session_to_csv(records: List[TestRecord], filename: str = "test_expor
     return filepath
 
 
-# ==============================================================================
 # STANDARD LIBRARY: RANDOM (SIMULATED TEST DATA GENERATOR)
-# ==============================================================================
 def generate_simulated_test(target_safety: str = "random") -> StressStrainTest:
     """
     Generates realistic, randomized engineering test parameters for simulation.
@@ -162,23 +160,18 @@ def generate_simulated_test(target_safety: str = "random") -> StressStrainTest:
     Args:
         target_safety: 'safe', 'caution', 'unsafe', or 'random'
     """
-    # Random realistic original length between 0.5m and 12.0m
+
     original_length = round(random.uniform(0.5, 10.0), 2)
 
-    # Random realistic cross-sectional area between 0.001 m^2 and 0.05 m^2
     area = round(random.uniform(0.002, 0.025), 6)
 
-    # Random force between 5,000 N and 120,000 N
     force = round(random.uniform(5000.0, 100000.0), 2)
 
-    # Calculate resulting stress in Pa
     stress_pa = force / area
 
-    # Choose a simulated modulus between 50 GPa and 220 GPa to estimate plausible strain
     assumed_e_pa = random.uniform(60.0, 200.0) * 1e9
     plausible_strain = stress_pa / assumed_e_pa
 
-    # Change in length based on strain
     change_in_length = round(plausible_strain * original_length, 6)
 
     return StressStrainTest(
