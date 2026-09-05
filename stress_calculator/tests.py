@@ -157,7 +157,29 @@ def display_test_record(record: TestRecord, units: Tuple[str, ...] = UNITS) -> N
     print("=" * BANNER_WIDTH)
 
 
+class TestCollection:
+    """
+    Manages the session collection of test records.
+    Maintains the history List, unique materials Set, and generates statistical summaries.
+    """
 
+    def __init__(self):
+        self.records: List[TestRecord] = []
+        self.unique_materials: Set[str] = set()
+
+    def add_record(self, record: TestRecord) -> None:
+        """Appends a new test record to history and updates unique materials."""
+        self.records.append(record)
+        self.unique_materials.add(record.material)
+
+    def compute_statistics(self) -> Optional[Dict[str, Any]]:
+        """Computes statistical metrics across all recorded tests."""
+        total = len(self.records)
+        if total == 0:
+            return None
+
+        safe_count = sum(1 for r in self.records if r.safety_status == "SAFE")
+        stress_vals = [r.stress_mpa for r in self.records]
 
         return {
             "total": total,
