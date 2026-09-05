@@ -16,13 +16,11 @@ from .properties import MaterialProperties
 from .tests import StressStrainTest, TestRecord
 
 
-# Default directory for persistent data and exports
+# default directory
 DEFAULT_DATA_DIR = Path("data")
 
 
-# ==============================================================================
 # PREDEFINED MATERIALS DATABASE
-# ==============================================================================
 def get_default_materials() -> List[Material]:
     """Returns the baseline library of pre-configured engineering materials."""
     return [
@@ -72,18 +70,14 @@ class MaterialDatabase:
         return added
 
 
-# ==============================================================================
 # STANDARD LIBRARY: PATHLIB & DIRECTORY MANAGEMENT
-# ==============================================================================
 def ensure_data_directory(directory: Path = DEFAULT_DATA_DIR) -> Path:
     """Ensures that the target directory exists, creating parent folders if necessary."""
     directory.mkdir(parents=True, exist_ok=True)
     return directory
 
 
-# ==============================================================================
 # STANDARD LIBRARY: JSON (SAVING & LOADING SESSIONS)
-# ==============================================================================
 def save_session_to_json(records: List[TestRecord], filename: str = "session_history.json", directory: Path = DEFAULT_DATA_DIR) -> Path:
     """
     Saves a collection of test records to a JSON file.
@@ -134,30 +128,9 @@ def load_materials_from_json(filename: str = "materials_catalog.json", directory
     return [Material.from_dict(item) for item in data]
 
 
-# ==============================================================================
 # STANDARD LIBRARY: CSV (EXPORTING TEST DATA)
-# ==============================================================================
-def export_session_to_csv(records: List[TestRecord], filename: str = "test_export.csv", directory: Path = DEFAULT_DATA_DIR) -> Path:
-    """
-    Exports test records into a standardized CSV spreadsheet format.
-    """
-    ensure_data_directory(directory)
-    filepath = directory / filename
 
-    fieldnames = [
-        "timestamp", "material", "category", "force", "area", "original_length",
-        "change_in_length", "stress_pa", "stress_mpa", "strain",
-        "rated_modulus_gpa", "calculated_modulus_gpa", "yield_strength_mpa",
-        "fos", "safety_status"
-    ]
 
-    with open(filepath, "w", newline="", encoding="utf-8") as f:
-        writer = csv.DictWriter(f, fieldnames=fieldnames)
-        writer.writeheader()
-        for record in records:
-            writer.writerow(record.to_dict())
-
-    return filepath
 
 
 # ==============================================================================
